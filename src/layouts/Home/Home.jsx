@@ -19,13 +19,15 @@ const Home = () => {
                     <NavBar></NavBar>
                 </nav>
             </header>
-            <main className='*:border grid grid-cols-[1fr_2fr_1fr] w-[90%] mx-auto'>
+            <main className='grid grid-cols-[1fr_2fr_1fr] w-[90%] mx-auto'>
                 <aside>
                     <Suspense fallback={<span className="loading loading-dots loading-xl"></span>}>
                         <LeftAside></LeftAside>
                     </Suspense>
                 </aside>
                 <section className='main'>
+                    <h1 className='font-semibold text-primary text-xl mb-2 py-2 px-4'>Dragon News Home</h1>
+
                     <Outlet></Outlet>
                 </section>
                 <aside>
