@@ -20,7 +20,7 @@ const Home = () => {
                 </nav>
             </header>
             <main className='grid grid-cols-[1fr_2fr_1fr] w-[90%] mx-auto items-start'>
-                <aside className='sticky top-0'>
+                <aside className='sticky top-2'>
                     <Suspense fallback={<span className="loading loading-dots loading-xl"></span>}>
                         <LeftAside></LeftAside>
                     </Suspense>
@@ -28,7 +28,7 @@ const Home = () => {
                 <section className='main'>
                     <Outlet></Outlet>
                 </section>
-                <aside className='sticky top-0'>
+                <aside className='sticky top-2'>
                     <RightAside></RightAside>
                 </aside>
             </main>
