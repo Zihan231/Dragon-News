@@ -62,7 +62,7 @@ const Register = () => {
             <input type="checkbox" className="mr-2" required />
             <span>
               I agree to the{" "}
-              <a href="#" className="text-pink-500  hover:underline">
+              <a href="#" className="text-pink-500 font-semibold hover:underline">
                 Terms & Conditions
               </a>
             </span>
