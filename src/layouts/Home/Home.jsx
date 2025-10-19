@@ -26,8 +26,6 @@ const Home = () => {
                     </Suspense>
                 </aside>
                 <section className='main'>
-                    <h1 className='font-semibold text-primary text-xl mb-2 py-2 px-4'>Dragon News Home</h1>
-
                     <Outlet></Outlet>
                 </section>
                 <aside>

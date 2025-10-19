@@ -30,6 +30,7 @@ const CategoryNews = () => {
         <div>
             {/* Categories {newsByCategory.length} */}
             <div className='grid grid-cols-1 px-4 gap-4'>
+                <h1 className='font-semibold text-primary text-xl mb-2 px-4'>Total News Found (<span className='text-secondary'>{newsByCategory.length}</span>)</h1>
                 {
                     newsByCategory.length > 0 ? newsByCategory.map(news => <NewsCards key={news.id} news={news}></NewsCards>) : (
                         <div className='flex flex-col items-center justify-center py-20 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50'>
