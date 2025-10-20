@@ -1,27 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import {AuthContext} from '../../context/AuthContext/AuthContext.js'
+import { AuthContext } from '../../context/AuthContext/AuthContext.js';
+import HashLoader from "react-spinners/HashLoader";
+
 const Register = () => {
 
+  const [error, SetError] = useState("");
+  const [isLogin, SetIsLogin] = useState(false);
   const navigate = useNavigate();
-  const {createUser, SetUser} = useContext(AuthContext)
+  const { createUser, SetUser } = useContext(AuthContext)
 
   const handleRegister = (e) => {
     e.preventDefault();
     // const name = (e.target.name.value || null).trim();
-    const email = (e.target.email.value || null).trim();
+    const email = (e.target.email.value).trim();
     // const photoUrl = (e.target.photoUrl.value || null).trim();
-    const password = (e.target.pass.value || null).trim();
+    const password = (e.target.pass.value).trim();
     // const isChecked = (e.target.term.checked);
+    if (email && password) {
+      SetIsLogin(true);
     createUser(email, password)
       .then(result => {
         const User = result.user;
         SetUser(User);
         navigate('/');
-      }).catch(error => {
-        const errorMessage = error.message;
-        console.log(errorMessage);
-    })
+      }).catch(() => {
+        SetError("Something went wrong!")
+        // const errorMessage = error.message;
+        // console.log(errorMessage);
+      }).finally(() => {
+        SetIsLogin(false);
+      })
+    }
+    else {
+      SetError("Fill Up All the Fields");
+    }
     // console.log(name, email, photoUrl, password, isChecked);
   }
 
@@ -100,8 +113,18 @@ const Register = () => {
             type="submit"
             className="w-full bg-pink-600 text-white py-2 rounded-lg font-semibold hover:bg-pink-700 transition"
           >
-            Register
+            {isLogin ? (
+              <HashLoader color="#fff" size={25} />
+            ) : (
+              "Register"
+            )}
           </button>
+          {/* 🧩 Error message box */}
+          {error && (
+            <div className="bg-red-100 text-red-700 border border-red-400 rounded-md p-2 text-center">
+              {error}
+            </div>
+          )}
         </form>
 
         {/* Divider */}

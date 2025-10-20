@@ -1,29 +1,32 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../context/AuthContext/AuthContext';
+import HashLoader from "react-spinners/HashLoader";
 
 const Login = () => {
 
+  const [error, SetError] = useState("");
+  const [isLogin, SetIsLogin] = useState(false);
   const navigate = useNavigate();
   const { handleSignIn } = useContext(AuthContext);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const email = (e.target.email.value || null).trim();
-    const pass = (e.target.pass.value || null).trim();
+    const email = (e.target.email.value).trim();
+    const pass = (e.target.pass.value).trim();
+    SetIsLogin(true);
     handleSignIn(email, pass).then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
       console.log(user);
       navigate('/');
     })
-      .catch((error) => {
-        // const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
-
-    // console.log(email , pass)
+      .catch(() => {
+        SetError("Invalid Email or Password");
+      }).finally(() => {
+        SetIsLogin(false);
+      }
+      );
   }
 
   return (
@@ -75,10 +78,20 @@ const Login = () => {
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition flex justify-center items-center gap-2"
           >
-            Log In
+            {isLogin ? (
+              <HashLoader color="#fff" size={25} />
+            ) : (
+              "LogIn"
+            )} 
           </button>
+          {/* 🧩 Error message box */}
+          {error && (
+            <div className="bg-red-100 text-red-700 border border-red-400 rounded-md p-2 text-center">
+              {error}
+            </div>
+          )}
         </form>
 
         {/* Divider */}

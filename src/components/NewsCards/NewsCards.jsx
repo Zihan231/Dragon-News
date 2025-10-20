@@ -1,6 +1,7 @@
 import React from 'react';
 import { CiBookmark } from 'react-icons/ci';
 import { FaEye, FaShareAlt, FaStar } from 'react-icons/fa';
+import { Link } from 'react-router';
 
 const NewsCards = ({ news }) => {
     return (
@@ -35,8 +36,14 @@ const NewsCards = ({ news }) => {
                 <div className='flex justify-center items-center'>
                     <img className='rounded-xl mt-2' src={news.thumbnail_url} alt={news.title} />
                 </div>
-                <p className='text-accent mt-4 text-justify'>{news.details}</p>
-
+                <p className='text-accent mt-4 text-justify'>
+                    {news.details.slice(0, 200)}.....
+                    <Link to={`/news-details/${news.id}`}
+                        className='text-orange-600 font-semibold hover:underline mt-2'
+                    >
+                        Read More
+                    </Link>
+                </p>
                 {/* Tags */}
                 {news.tags && (
                     <div className='flex flex-wrap gap-2 mt-2'>
