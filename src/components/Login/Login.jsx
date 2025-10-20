@@ -1,7 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { AuthContext } from '../../context/AuthContext/AuthContext';
 
 const Login = () => {
+
+  const navigate = useNavigate();
+  const { handleSignIn } = useContext(AuthContext);
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = (e.target.email.value || null).trim();
+    const pass = (e.target.pass.value || null).trim();
+    handleSignIn(email, pass).then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      console.log(user);
+      navigate('/');
+    })
+      .catch((error) => {
+        // const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+
+    // console.log(email , pass)
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
@@ -12,11 +36,12 @@ const Login = () => {
           Login to your account to continue
         </p>
 
-        <form className="space-y-5">
+        <form onSubmit={handleLogin} className="space-y-5">
           {/* Email */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Email</label>
             <input
+              name='email'
               type="email"
               placeholder="Enter your email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -28,6 +53,7 @@ const Login = () => {
           <div>
             <label className="block text-gray-700 font-medium mb-2">Password</label>
             <input
+              name='pass'
               type="password"
               placeholder="Enter your password"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -38,7 +64,7 @@ const Login = () => {
           {/* Remember & Forgot Password */}
           <div className="flex items-center justify-between text-sm">
             <label className="flex items-center">
-              <input type="checkbox" className="mr-2" />
+              <input name='rememberMe' type="checkbox" className="mr-2" />
               Remember me
             </label>
             <a href="#" className="text-blue-500 hover:underline">

@@ -1,7 +1,30 @@
-import React from 'react';
-import { Link } from 'react-router';
-
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router';
+import {AuthContext} from '../../context/AuthContext/AuthContext.js'
 const Register = () => {
+
+  const navigate = useNavigate();
+  const {createUser, SetUser} = useContext(AuthContext)
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // const name = (e.target.name.value || null).trim();
+    const email = (e.target.email.value || null).trim();
+    // const photoUrl = (e.target.photoUrl.value || null).trim();
+    const password = (e.target.pass.value || null).trim();
+    // const isChecked = (e.target.term.checked);
+    createUser(email, password)
+      .then(result => {
+        const User = result.user;
+        SetUser(User);
+        navigate('/');
+      }).catch(error => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+    })
+    // console.log(name, email, photoUrl, password, isChecked);
+  }
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
@@ -12,15 +35,16 @@ const Register = () => {
           Join us and start your journey today
         </p>
 
-        <form className="space-y-5">
+        <form onSubmit={handleRegister} className="space-y-5">
           {/* Name */}
           <div>
             <label className="block text-gray-700 font-medium mb-2">Full Name</label>
             <input
+              name='name'
               type="text"
               placeholder="Enter your name"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-              required
+
             />
           </div>
 
@@ -28,10 +52,11 @@ const Register = () => {
           <div>
             <label className="block text-gray-700 font-medium mb-2">Photo URL</label>
             <input
+              name='photoUrl'
               type="text"
               placeholder="Enter your photo URL"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-              required
+
             />
           </div>
 
@@ -39,10 +64,11 @@ const Register = () => {
           <div>
             <label className="block text-gray-700 font-medium mb-2">Email</label>
             <input
+              name='email'
               type="email"
               placeholder="Enter your email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-              required
+
             />
           </div>
 
@@ -50,22 +76,23 @@ const Register = () => {
           <div>
             <label className="block text-gray-700 font-medium mb-2">Password</label>
             <input
+              name='pass'
               type="password"
               placeholder="Enter your password"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
-              required
+
             />
           </div>
 
           {/* Terms & Conditions */}
           <div className="flex items-center text-sm">
-            <input type="checkbox" className="mr-2" required />
-            <span>
+            <input name='term' type="checkbox" id='terms' className="mr-2" />
+            <label htmlFor='terms'>
               I agree to the{" "}
               <a href="#" className="text-pink-500 font-semibold hover:underline">
                 Terms & Conditions
               </a>
-            </span>
+            </label>
           </div>
 
           {/* Register Button */}
