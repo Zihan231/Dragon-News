@@ -7,13 +7,11 @@ const NavBar = () => {
     const navigate = useNavigate();
     const { user, handleSignOut } = useContext(AuthContext);
     const handleLogOut = () => {
-        // console.log("Clicked")
+
         handleSignOut().then(() => {
-            console.log("Sign-out successful.");
             navigate('/');
-            // return <Navigate to='/'></Navigate>;
+
         }).catch((error) => {
-            console.log(error.message)
         });
     }
     const NavLinks = <>
@@ -46,18 +44,15 @@ const NavBar = () => {
                 </ul>
             </div>
             <div className="navbar-end flex gap-4">
-                <img src={profile} alt="" />
+                <img className='w-12' src={(user && user.email) ? (user.photoURL) : (profile)} alt="" />
                 {
                     user ? (
                         <button onClick={handleLogOut} className="btn btn-primary">Log Out</button>
                     ) :
                         (
                             <Link to='/auth/login' className="btn btn-primary">Login</Link>
-
                         )
                 }
-                {/* <Link to='/auth/login' className="btn btn-primary">Login</Link> */}
-
             </div>
         </div>
     );

@@ -2,23 +2,22 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../context/AuthContext/AuthContext';
 import HashLoader from "react-spinners/HashLoader";
-import loading from 'daisyui/components/loading';
 
 const Login = () => {
   const { handleSignIn, user, isLoading } = useContext(AuthContext);
   const [error, SetError] = useState("");
   const [isLogin, SetIsLogin] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
+  const location = useLocation();
+  const redirectTo = location.state?.from || '/';
 
   useEffect(() => {
     if (!isLoading && user && user.email) {
-      // console.log(isLoading);
-      navigate('/');
+      navigate(redirectTo);
       return;
     }
-  }, [user, navigate, isLoading])
+  }, [user, navigate, isLoading,redirectTo])
   if (isLoading) {
     return (
       <div className='h-screen flex justify-center items-center'>
@@ -28,6 +27,7 @@ const Login = () => {
       </div>
     );
   }
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = (e.target.email.value).trim();
@@ -36,8 +36,7 @@ const Login = () => {
     handleSignIn(email, pass).then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
-      console.log(user);
-      navigate(`${location.state ? location.state : "/"}`);
+      navigate(redirectTo);
     })
       .catch(() => {
         SetError("Invalid Email or Password");

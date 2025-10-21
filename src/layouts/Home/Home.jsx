@@ -1,17 +1,20 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
-import { Outlet } from 'react-router';
+import { Outlet, useNavigation } from 'react-router';
 import LatestNews from '../../components/LatestNews/LatestNews';
 import NavBar from '../../components/NavBar/NavBar';
 import LeftAside from '../../components/LeftAside/LeftAside.jsx'
 import RightAside from '../../components/RightAside/RightAside.jsx'
 import { Suspense } from 'react';
+import Loader from '../../components/Loader/Loader.jsx';
 
 const Home = () => {
+    const { state } = useNavigation();
     return (
         <div>
             <header>
                 <Header></Header>
+                
                 <section>
                     <LatestNews></LatestNews>
                 </section>
@@ -26,7 +29,9 @@ const Home = () => {
                     </Suspense>
                 </aside>
                 <section className='main'>
-                    <Outlet></Outlet>
+                    {
+                        state=="loading" ? <Loader></Loader> :<Outlet></Outlet>
+                    }
                 </section>
                 <aside className='sticky top-2'>
                     <RightAside></RightAside>

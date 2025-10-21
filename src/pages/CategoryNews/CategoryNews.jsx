@@ -10,22 +10,18 @@ const CategoryNews = () => {
     useEffect(() => {
         if (id == "0") {
             SetNewsByCategory(allNews);
-            // return;
         }
         else if (id == "1") {
             const filteredNews = allNews.filter(news => news.others.is_today_pick == true);
             SetNewsByCategory(filteredNews);
-            // console.log(filteredNews);
 
         }
         else {
             const filteredNews = allNews.filter(news => news.category_id == id);
             SetNewsByCategory(filteredNews);
-            // console.log(filteredNews);
         }
 
     }, [id, allNews, SetNewsByCategory]);
-    // console.log(allNews);   
     return (
         <div>
             {/* Categories {newsByCategory.length} */}

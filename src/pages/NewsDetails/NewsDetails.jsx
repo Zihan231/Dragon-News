@@ -9,16 +9,13 @@ import NavBar from '../../components/NavBar/NavBar';
 const NewsDetails = () => {
     const data = useLoaderData();
     const { id } = useParams();
-    // console.log(id);
 
     const [news, SetNews] = useState();
-    // console.log(news);
     useEffect(() => {
         if (data) {
             const singleNews = data.find(n => n.id == id);
             setTimeout(() => SetNews(singleNews), 300);
         }
-        // console.log();
     }, [data, id]);
 
     if (!news) {
