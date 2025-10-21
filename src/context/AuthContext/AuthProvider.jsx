@@ -18,12 +18,16 @@ const AuthProvider = ({ children }) => {
     const handleSignIn = (email, password) => {
         return signInWithEmailAndPassword(auth, email, password);
     }
+    // setUser
     const [user, SetUser] = useState(null);
+    // Set Loading
+    const [isLoading, SetIsLoading] = useState(true);
     // console.log(user);
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             SetUser(currentUser);
+            SetIsLoading(false);
         });
         return () => {
             unSubscribe()
@@ -34,13 +38,14 @@ const AuthProvider = ({ children }) => {
         SetUser,
         createUser,
         handleSignOut,
-        handleSignIn
+        handleSignIn,
+        isLoading
     }
 
     return (
-        <AuthContext value={authData}>
+        <AuthContext.Provider value={authData}>
             {children}
-        </AuthContext>
+        </AuthContext.Provider>
     );
 };
 

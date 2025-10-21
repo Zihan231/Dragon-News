@@ -10,7 +10,7 @@ const CategoryNews = () => {
     useEffect(() => {
         if (id == "0") {
             SetNewsByCategory(allNews);
-            return;
+            // return;
         }
         else if (id == "1") {
             const filteredNews = allNews.filter(news => news.others.is_today_pick == true);

@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { RouterProvider } from 'react-router'
 import router from './routes/router.jsx'
 import AuthProvider from './context/AuthContext/AuthProvider.jsx'
+import { HashLoader } from 'react-spinners'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
